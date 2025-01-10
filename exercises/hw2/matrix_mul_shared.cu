@@ -34,11 +34,11 @@ __global__ void mmul(const float *A, const float *B, float *C, int ds) {
 
   if ((idx < ds) && (idy < ds)){
     float temp = 0;
-    for (int i = 0; i < ds/block_size; i++) {
+    for (int i = 0; i < ds/block_size; i++) { // 8192 / 32 = 256
 
       // Load data into shared memory
-      As[threadIdx.y][threadIdx.x] = A[FIXME];
-      Bs[threadIdx.y][threadIdx.x] = B[FIXME];
+      As[threadIdx.y][threadIdx.x] = A[idy*ds+idx];
+      Bs[threadIdx.y][threadIdx.x] = B[idy*ds+idx];
 
       // Synchronize
       __syncthreads();
